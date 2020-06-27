@@ -1,0 +1,19 @@
+{
+  "name": "gourl_api",
+  "version": "1.0.0",
+  "description": "gourl serverless url shortner api",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/adityatelange/gourl.git"
+  },
+  "author": "Aditya Telange",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/adityatelange/gourl/issues"
+  },
+  "homepage": "https://github.com/adityatelange/gourl#readme"
+}
