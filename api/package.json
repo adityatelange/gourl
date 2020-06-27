@@ -15,5 +15,9 @@
   "bugs": {
     "url": "https://github.com/adityatelange/gourl/issues"
   },
-  "homepage": "https://github.com/adityatelange/gourl#readme"
+  "homepage": "https://github.com/adityatelange/gourl#readme",
+  "dependencies": {
+    "mongodb": "^3.5.9",
+    "shortid": "^2.2.15"
+  }
 }
