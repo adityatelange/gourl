@@ -47,18 +47,29 @@ module.exports = async (req, res) => {
 
   // check for url
   if (url) {
-    // generate new shortUrl and send back
-    const newshortUrl = shortid.generate();
-    collection
-      .insertOne({
-        url: url,
-        shorturl: newshortUrl,
-        clicks: 0,
-      })
-      .then(() => {
-        res.status(201).json({
-          goto: newshortUrl,
+    // get the ShortUrl obj for query
+    await collection
+      .findOne({ url })
+      .then((shorturlObj) => {
+        // check whether shortUrl exists to avoid repetition
+        res.status(200).json({
+          goto: shorturlObj.shorturl,
         });
+      })
+      .catch(() => {
+        // generate new shortUrl and send back
+        const newshortUrl = shortid.generate();
+        collection
+          .insertOne({
+            url: url,
+            shorturl: newshortUrl,
+            clicks: 0,
+          })
+          .then(() => {
+            res.status(201).json({
+              goto: newshortUrl,
+            });
+          });
       });
   } else {
     res.writeHead(302, { Location: "/" });
