@@ -5,10 +5,102 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GoURL</title>
+    <script>
+        function geturl() {
+            var url = document.getElementById("urlinput").value;
+            var protocol_ok = url.startsWith("http://") || url.startsWith("https://") || url.startsWith("ftp://");
+            if (!protocol_ok) {
+                newurl = "http://" + url;
+                return newurl;
+            } else {
+                return url;
+            }
+        }
+        function shorturl() {
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == XMLHttpRequest.DONE) {
+                    document.getElementById("goto").value = document.URL + JSON.parse(xhr.responseText).goto
+                }
+            }
+            xhr.open("POST", "api/");
+            xhr.setRequestHeader("Content-Type", "application/json");
+            xhr.send(JSON.stringify({ url: geturl() }));
+        }
+
+        function c2c() {
+            var copyText = document.getElementById("goto");
+            copyText.select();
+            copyText.setSelectionRange(0, 99999);
+            document.execCommand("copy");
+
+            var tooltip = document.getElementById("myTooltip");
+            tooltip.innerHTML = "Copied: " + copyText.value;
+        }
+
+        function outFunc() {
+            var tooltip = document.getElementById("myTooltip");
+            tooltip.innerHTML = "Copy to clipboard";
+        }
+    </script>
+    <style>
+        .tooltip {
+            position: relative;
+            display: inline-block;
+        }
+
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 140px;
+            background-color: #555;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 5px;
+            position: absolute;
+            z-index: 1;
+            bottom: 150%;
+            left: 50%;
+            margin-left: -75px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .tooltip .tooltiptext::after {
+            content: "";
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: #555 transparent transparent transparent;
+        }
+
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        body {
+            text-align: center;
+            padding-top: 15%;
+        }
+    </style>
 </head>
 
 <body>
+    <input type="url" id="urlinput" required>
+    <button onclick="shorturl()">Short The URL</button>
+    <br><br><br>
+    <input id="goto" type="text" value="-">
 
+    <div class="tooltip">
+        <button onclick="c2c()" onmouseout="outFunc()">
+            <span class="tooltiptext" id="myTooltip">Copy to clipboard</span>
+            Copy text
+        </button>
+    </div>
 </body>
 
 </html>
