@@ -4,8 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="GoURL url shorterner">
     <title>GoURL</title>
-    <script>
+    <script type="text/javascript">
         function geturl() {
             var url = document.getElementById("urlinput").value;
             var protocol_ok = url.startsWith("http://") || url.startsWith("https://") || url.startsWith("ftp://");
@@ -20,7 +21,8 @@
             var xhr = new XMLHttpRequest();
             xhr.onreadystatechange = function () {
                 if (xhr.readyState == XMLHttpRequest.DONE) {
-                    document.getElementById("goto").value = document.URL + JSON.parse(xhr.responseText).goto
+                    document.getElementById("goto").value = document.URL + JSON.parse(xhr.responseText).goto;
+                    c2c();
                 }
             }
             xhr.open("POST", "api/");
@@ -30,20 +32,39 @@
 
         function c2c() {
             var copyText = document.getElementById("goto");
-            copyText.select();
-            copyText.setSelectionRange(0, 99999);
-            document.execCommand("copy");
+            if (copyText.value) {
+                copyText.select();
+                copyText.setSelectionRange(0, 99999);
+                document.execCommand("copy");
 
-            var tooltip = document.getElementById("myTooltip");
-            tooltip.innerHTML = "Copied: " + copyText.value;
+                var tooltip = document.getElementById("myTooltip");
+                tooltip.innerHTML = "Copied: " + copyText.value;
+            }
         }
 
         function outFunc() {
             var tooltip = document.getElementById("myTooltip");
             tooltip.innerHTML = "Copy to clipboard";
         }
+
+
+        function clearBoxes() {
+            document.getElementById('goto').value = document.getElementById('urlinput').value = '';
+        }
+
     </script>
     <style>
+        /* Mobile First Media Queries */
+
+        /* Base style */
+
+        body {
+            text-align: center;
+            padding-top: 15%;
+            padding-left: 10%;
+            padding-right: 10%;
+        }
+
         .tooltip {
             position: relative;
             display: inline-block;
@@ -51,56 +72,115 @@
 
         .tooltip .tooltiptext {
             visibility: hidden;
-            width: 140px;
+            width: 300px;
             background-color: #555;
             color: #fff;
             text-align: center;
-            border-radius: 6px;
-            padding: 5px;
+            border-radius: 4px;
+            padding: 2px;
             position: absolute;
             z-index: 1;
-            bottom: 150%;
-            left: 50%;
+            bottom: -130%;
+            left: 0%;
             margin-left: -75px;
             opacity: 0;
             transition: opacity 0.3s;
         }
 
-        .tooltip .tooltiptext::after {
-            content: "";
-            position: absolute;
-            top: 100%;
-            left: 50%;
-            margin-left: -5px;
-            border-width: 5px;
-            border-style: solid;
-            border-color: #555 transparent transparent transparent;
-        }
-
         .tooltip:hover .tooltiptext {
             visibility: visible;
-            opacity: 1;
+            opacity: 0.4;
         }
 
-        body {
+        button {
+            margin: 1%;
+        }
+
+        input {
             text-align: center;
-            padding-top: 15%;
+        }
+
+        footer {
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            text-align: center;
+        }
+
+        /* Larger than mobile screen */
+        @media (min-width: 40.0rem) {
+            body {
+                text-align: center;
+                padding-top: 15%;
+                padding-left: 20%;
+                padding-right: 20%;
+            }
+        }
+
+        /* Larger than mobile screen */
+        @media (min-width: 60.0rem) {
+            body {
+                text-align: center;
+                padding-top: 15%;
+                padding-left: 25%;
+                padding-right: 25%;
+            }
+        }
+
+        /* Larger than tablet screen */
+        @media (min-width: 80.0rem) {
+            body {
+                text-align: center;
+                padding-top: 15%;
+                padding-left: 25%;
+                padding-right: 25%;
+            }
+        }
+
+        /* Larger than desktop screen */
+        @media (min-width: 120.0rem) {
+            body {
+                text-align: center;
+                padding-top: 10%;
+                padding-left: 25%;
+                padding-right: 25%;
+            }
         }
     </style>
+    <link rel="stylesheet preload"
+        href="https://fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.4.0/milligram.min.css">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
 </head>
 
 <body>
-    <input type="url" id="urlinput" required>
-    <button onclick="shorturl()">Short The URL</button>
-    <br><br><br>
-    <input id="goto" type="text" value="-">
+    <header>
+        <h1>🔗 GoURL</h1>
+        <br>
+    </header>
+    <main>
+        <input type="url" id="urlinput" placeholder="Enter the Link here" required aria-label="URL input">
+        <button onclick="shorturl()">Shorten</button>
+        <button onclick="clearBoxes()">Clear</button>
 
-    <div class="tooltip">
-        <button onclick="c2c()" onmouseout="outFunc()">
-            <span class="tooltiptext" id="myTooltip">Copy to clipboard</span>
-            Copy text
-        </button>
-    </div>
+        <br><br><br>
+        <input id="goto" type="text" placeholder="Shortened URL will appear here" readonly aria-label="Shortened URL">
+
+        <div class="tooltip">
+            <button onclick="c2c()" onmouseout="outFunc()">
+                <span class="tooltiptext" id="myTooltip">Copy to clipboard</span>
+                Copy text
+            </button>
+        </div>
+    </main>
+    <footer>
+        s
+    </footer>
 </body>
 
 </html>
