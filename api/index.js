@@ -64,6 +64,8 @@ module.exports = async (req, res) => {
             url: url,
             shorturl: newshortUrl,
             clicks: 0,
+            createdOn: Date(),
+            byIp: req.headers["x-forwarded-for"],
           })
           .then(() => {
             res.status(201).json({
