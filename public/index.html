@@ -23,6 +23,7 @@
                 if (xhr.readyState == XMLHttpRequest.DONE) {
                     document.getElementById("goto").value = document.URL + JSON.parse(xhr.responseText).goto;
                     c2c();
+                    document.getElementById('gotoBox').style.display = 'block';
                 }
             }
             xhr.open("POST", "api/");
@@ -50,6 +51,7 @@
 
         function clearBoxes() {
             document.getElementById('goto').value = document.getElementById('urlinput').value = '';
+            document.getElementById('gotoBox').style.display = 'none';
         }
 
     </script>
@@ -90,6 +92,10 @@
         .tooltip:hover .tooltiptext {
             visibility: visible;
             opacity: 0.4;
+        }
+
+        #gotoBox {
+            display: none;
         }
 
         button {
@@ -164,19 +170,23 @@
         <br>
     </header>
     <main>
-        <input type="url" id="urlinput" placeholder="Enter the Link here" required aria-label="URL input" autofocus>
-        <button onclick="shorturl()">Shorten</button>
-        <button onclick="clearBoxes()">Clear</button>
-
-        <br><br><br>
-        <input id="goto" type="text" placeholder="Shortened URL will appear here" readonly aria-label="Shortened URL">
-
-        <div class="tooltip">
-            <button onclick="c2c()" onmouseout="outFunc()">
-                <span class="tooltiptext" id="myTooltip">Copy to clipboard</span>
-                Copy text
-            </button>
+        <div id="urlinputBox">
+            <input type="url" id="urlinput" placeholder="Enter the Link here" required aria-label="URL input" autofocus>
+            <button onclick="shorturl()">Shorten</button>
+            <button onclick="clearBoxes()">Clear</button>
         </div>
+        <br><br><br>
+        <div id="gotoBox">
+            <input id="goto" type="text" placeholder="Shortened URL will appear here" readonly
+                aria-label="Shortened URL">
+            <div class="tooltip">
+                <button onclick="c2c()" onmouseout="outFunc()">
+                    <span class="tooltiptext" id="myTooltip">Copy to clipboard</span>
+                    Copy text
+                </button>
+            </div>
+        </div>
+
     </main>
     <footer>
         s
