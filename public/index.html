@@ -6,55 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="GoURL url shorterner">
     <title>GoURL</title>
-    <script type="text/javascript">
-        function geturl() {
-            var url = document.getElementById("urlinput").value;
-            var protocol_ok = url.startsWith("http://") || url.startsWith("https://") || url.startsWith("ftp://");
-            if (!protocol_ok) {
-                newurl = "http://" + url;
-                return newurl;
-            } else {
-                return url;
-            }
-        }
-        function shorturl() {
-            var xhr = new XMLHttpRequest();
-            xhr.onreadystatechange = function () {
-                if (xhr.readyState == XMLHttpRequest.DONE) {
-                    document.getElementById("goto").value = document.URL + JSON.parse(xhr.responseText).goto;
-                    c2c();
-                    document.getElementById('gotoBox').style.display = 'block';
-                }
-            }
-            xhr.open("POST", "api/");
-            xhr.setRequestHeader("Content-Type", "application/json");
-            xhr.send(JSON.stringify({ url: geturl() }));
-        }
 
-        function c2c() {
-            var copyText = document.getElementById("goto");
-            if (copyText.value) {
-                copyText.select();
-                copyText.setSelectionRange(0, 99999);
-                document.execCommand("copy");
-
-                var tooltip = document.getElementById("myTooltip");
-                tooltip.innerHTML = "Copied: " + copyText.value;
-            }
-        }
-
-        function outFunc() {
-            var tooltip = document.getElementById("myTooltip");
-            tooltip.innerHTML = "Copy to clipboard";
-        }
-
-
-        function clearBoxes() {
-            document.getElementById('goto').value = document.getElementById('urlinput').value = '';
-            document.getElementById('gotoBox').style.display = 'none';
-        }
-
-    </script>
     <style>
         /* Mobile First Media Queries */
 
@@ -191,6 +143,54 @@
     <footer>
         s
     </footer>
+    <script type="text/javascript">
+        function geturl() {
+            var url = document.getElementById("urlinput").value;
+            var protocol_ok = url.startsWith("http://") || url.startsWith("https://") || url.startsWith("ftp://");
+            if (!protocol_ok) {
+                newurl = "http://" + url;
+                return newurl;
+            } else {
+                return url;
+            }
+        }
+        function shorturl() {
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == XMLHttpRequest.DONE) {
+                    document.getElementById("goto").value = document.URL + JSON.parse(xhr.responseText).goto;
+                    c2c();
+                    document.getElementById('gotoBox').style.display = 'block';
+                }
+            }
+            xhr.open("POST", "api/");
+            xhr.setRequestHeader("Content-Type", "application/json");
+            xhr.send(JSON.stringify({ url: geturl() }));
+        }
+
+        function c2c() {
+            var copyText = document.getElementById("goto");
+            if (copyText.value) {
+                copyText.select();
+                copyText.setSelectionRange(0, 99999);
+                document.execCommand("copy");
+
+                var tooltip = document.getElementById("myTooltip");
+                tooltip.innerHTML = "Copied: " + copyText.value;
+            }
+        }
+
+        function outFunc() {
+            var tooltip = document.getElementById("myTooltip");
+            tooltip.innerHTML = "Copy to clipboard";
+        }
+
+
+        function clearBoxes() {
+            document.getElementById('goto').value = document.getElementById('urlinput').value = '';
+            document.getElementById('gotoBox').style.display = 'none';
+        }
+    </script>
 </body>
 
 </html>
