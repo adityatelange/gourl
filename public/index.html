@@ -167,8 +167,8 @@
             xhr.onreadystatechange = function () {
                 if (xhr.readyState == XMLHttpRequest.DONE) {
                     document.getElementById("goto").value = document.URL + JSON.parse(xhr.responseText).goto;
-                    c2c();
                     document.getElementById('gotoBox').style.display = 'block';
+                    c2c();
                 }
             }
             xhr.open("POST", "api/");
