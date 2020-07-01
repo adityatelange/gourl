@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="GoURL url shorterner">
+    <title>GoURL | Clicks Counter</title>
+
+    <style>
+        /* Mobile First Media Queries */
+
+        /* Base style */
+
+        body {
+            text-align: center;
+            padding-top: 15%;
+            padding-left: 10%;
+            padding-right: 10%;
+        }
+
+
+        #statsBox {
+            display: none;
+        }
+
+        button {
+            margin: 1%;
+        }
+
+        input {
+            text-align: center;
+        }
+
+        footer {
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            text-align: center;
+        }
+
+        /* Larger than mobile screen */
+        @media (min-width: 40.0rem) {
+            body {
+                text-align: center;
+                padding-top: 15%;
+                padding-left: 20%;
+                padding-right: 20%;
+            }
+        }
+
+        /* Larger than mobile screen */
+        @media (min-width: 60.0rem) {
+            body {
+                text-align: center;
+                padding-top: 15%;
+                padding-left: 25%;
+                padding-right: 25%;
+            }
+        }
+
+        /* Larger than tablet screen */
+        @media (min-width: 80.0rem) {
+            body {
+                text-align: center;
+                padding-top: 15%;
+                padding-left: 25%;
+                padding-right: 25%;
+            }
+        }
+
+        /* Larger than desktop screen */
+        @media (min-width: 120.0rem) {
+            body {
+                text-align: center;
+                padding-top: 10%;
+                padding-left: 25%;
+                padding-right: 25%;
+            }
+        }
+    </style>
+    <link rel="stylesheet preload"
+        href="https://fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.4.0/milligram.min.css">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+</head>
+
+<body>
+    <header>
+        <h1>🔗 GoURL</h1>
+        <h3>Clicks Counter</h3>
+        <br>
+    </header>
+    <main>
+        <div id="urlinputBox">
+            <input type="url" id="urlinput" placeholder="Enter the Shortened Link here ex. " required
+                aria-label="Shortened URL input" autofocus>
+            <button id="getClicksBtn" onclick="getStats()">Get Clicks</button>
+            <button onclick="clearBoxes()">Clear</button>
+        </div>
+        <br><br><br>
+        <div id="statsBox">
+            ss
+        </div>
+
+    </main>
+    <footer>
+        s
+    </footer>
+    <script type="text/javascript">
+        var urlinput = document.getElementById("urlinput");
+        document.getElementById('urlinput').placeholder = document.getElementById('urlinput').placeholder + window.location.protocol + "//" + window.location.hostname + "/XYZabc"
+
+        urlinput.addEventListener("keyup", function (event) {
+            if (event.keyCode === 13) {
+                event.preventDefault();
+                document.getElementById("getClicksBtn").click();
+            }
+        });
+
+        function getStats() {
+            var url = document.getElementById("urlinput").value;
+            uri = url.split('/')[3]
+            if (uri) {
+                var xhr = new XMLHttpRequest();
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState == XMLHttpRequest.DONE) {
+                        clicks = JSON.parse(xhr.responseText).clicks
+                        if (!Number.isInteger(clicks)) {
+                            clicks = 0
+                        }
+                        InnerHTML = "<h2>Clicks : " + clicks + "</h2>";
+                        document.getElementById("statsBox").innerHTML = InnerHTML
+                        document.getElementById('statsBox').style.display = 'block';
+                    }
+                }
+                xhr.open("GET", "api/clicks/" + uri);
+                xhr.setRequestHeader("Content-Type", "application/json");
+                xhr.send();
+            } else {
+                InnerHTML = "Malformed input";
+                document.getElementById("statsBox").innerHTML = InnerHTML
+                document.getElementById('statsBox').style.display = 'block';
+            }
+        }
+
+        function clearBoxes() {
+            document.getElementById('urlinput').value = '';
+            document.getElementById('statsBox').style.display = 'none';
+        }
+    </script>
+</body>
+
+</html>
