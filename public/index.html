@@ -124,7 +124,7 @@
     <main>
         <div id="urlinputBox">
             <input type="url" id="urlinput" placeholder="Enter the Link here" required aria-label="URL input" autofocus>
-            <button onclick="shorturl()">Shorten</button>
+            <button id="shortenBtn" onclick="shorturl()">Shorten</button>
             <button onclick="clearBoxes()">Clear</button>
         </div>
         <br><br><br>
@@ -144,6 +144,14 @@
         s
     </footer>
     <script type="text/javascript">
+        var urlinput = document.getElementById("urlinput");
+
+        urlinput.addEventListener("keyup", function (event) {
+            if (event.keyCode === 13) {
+                event.preventDefault();
+                document.getElementById("shortenBtn").click();
+            }
+        });
         function geturl() {
             var url = document.getElementById("urlinput").value;
             var protocol_ok = url.startsWith("http://") || url.startsWith("https://") || url.startsWith("ftp://");
