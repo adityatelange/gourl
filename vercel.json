@@ -1,10 +1,6 @@
 {
   "rewrites": [
     {
-      "source": "/",
-      "destination": "/index.html"
-    },
-    {
       "source": "/clicks",
       "destination": "/clicks.html"
     },
