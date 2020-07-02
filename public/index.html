@@ -210,7 +210,9 @@
         }
         function shorturl() {
             const url = geturl()
-            if (validate(url)) {
+            domain = url.split('/')[2]
+
+            if (validate(url) && (domain != (window.location.hostname + (location.port ? ':' + location.port : '')))) {
                 var xhr = new XMLHttpRequest();
                 xhr.onreadystatechange = function () {
                     if (xhr.readyState == XMLHttpRequest.DONE) {
