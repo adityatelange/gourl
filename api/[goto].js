@@ -43,35 +43,43 @@ module.exports = async (req, res) => {
   var {
     query: { goto },
   } = req;
-  // params we get after rewrite is xxx?id=xxx
-  // so we split at ? and get the 0th val
-  goto = goto.split("?")[0];
+  try {
+    // params we get after rewrite is xxx?id=xxx
+    // so we split at ? and get the 0th val
+    goto = goto.split("?")[0];
 
-  // get the ShortUrl obj for query
-  await collection
-    .findOne({ shorturl: goto })
-    .then((urlObj) => {
-      // update num of click
-      collection.updateOne(
-        { shorturl: goto },
-        {
-          $set: {
-            clicks: urlObj.clicks + 1,
-          },
-        }
-      );
+    // get the ShortUrl obj for query
+    await collection
+      .findOne({ shorturl: goto })
+      .then((urlObj) => {
+        // update num of click
+        collection.updateOne(
+          { shorturl: goto },
+          {
+            $set: {
+              clicks: urlObj.clicks + 1,
+            },
+          }
+        );
 
-      // Redirect user to destination
-      res.writeHead(302, {
-        Location: urlObj.url,
+        // Redirect user to destination
+        res.writeHead(302, {
+          Location: urlObj.url,
+        });
+        res.end();
+      })
+      .catch(() => {
+        // if no shorturl found redir to /
+        res.writeHead(302, {
+          Location: "/",
+        });
+        res.end();
       });
-      res.end();
-    })
-    .catch(() => {
-      // if no shorturl found redir to /
-      res.writeHead(302, {
-        Location: "/",
-      });
-      res.end();
+  } catch (error) {
+    // if incorrect params redir to /
+    res.writeHead(302, {
+      Location: "/",
     });
+    res.end();
+  }
 };
