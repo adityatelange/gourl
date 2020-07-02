@@ -126,27 +126,32 @@
 
         function getStats() {
             var url = document.getElementById("urlinput").value;
-            uri = url.split('/')[3]
-            if (uri) {
-                var xhr = new XMLHttpRequest();
-                xhr.onreadystatechange = function () {
-                    if (xhr.readyState == XMLHttpRequest.DONE) {
-                        clicks = JSON.parse(xhr.responseText).clicks
-                        if (!Number.isInteger(clicks)) {
-                            clicks = 0
+
+            try {
+                domain = url.split('/')[2]
+                uri = url.split('/')[3]
+                if (domain === window.location.hostname + (location.port ? ':' + location.port : '') && uri) {
+                    var xhr = new XMLHttpRequest();
+                    xhr.onreadystatechange = function () {
+                        if (xhr.readyState == XMLHttpRequest.DONE) {
+                            clicks = JSON.parse(xhr.responseText).clicks
+                            if (!Number.isInteger(clicks)) {
+                                clicks = 0
+                            }
+                            InnerHTML = "<h2>Clicks : " + clicks + "</h2>";
+                            document.getElementById("statsBox").innerHTML = InnerHTML
+                            document.getElementById('statsBox').style.display = 'block';
                         }
-                        InnerHTML = "<h2>Clicks : " + clicks + "</h2>";
-                        document.getElementById("statsBox").innerHTML = InnerHTML
-                        document.getElementById('statsBox').style.display = 'block';
                     }
+                    xhr.open("GET", "api/clicks/" + uri);
+                    xhr.setRequestHeader("Content-Type", "application/json");
+                    xhr.send();
+                } else {
+                    throw true
                 }
-                xhr.open("GET", "api/clicks/" + uri);
-                xhr.setRequestHeader("Content-Type", "application/json");
-                xhr.send();
-            } else {
-                InnerHTML = "Malformed input";
-                document.getElementById("statsBox").innerHTML = InnerHTML
-                document.getElementById('statsBox').style.display = 'block';
+            } catch (error) {
+                clearBoxes()
+                alert("URL InValid")
             }
         }
 
