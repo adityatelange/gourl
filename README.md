@@ -24,7 +24,11 @@ URL Shortner using Vercel /Zeit-Now 's Serverless Api and MongoDB
 
 ---
 
-🌟 MongoDB Atlas offers `512 mb` for FREE tier, with 1 ShortURL using `~200 b` of space one can have `2.5 Million+` Urls in a Cluster !
+> 🌟 MongoDB Atlas offers `512 mb` for FREE tier, with 1 ShortURL using `~200 b` of space one can have `2.5 Million+` Urls in a Cluster !
+
+<kbd><img src="https://i.ibb.co/hdKRRcB/Screenshot-from-2020-07-06-23-15-27.png" /></kbd>
+
+---
 
 Notes:
 
