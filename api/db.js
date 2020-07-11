@@ -7,6 +7,11 @@ const uri = process.env.GOURLDB
 // Create cached connection variable
 let cachedDb = null;
 
+// Don't respond to external api requests
+module.exports = async (req, res) => {
+    res.end()
+}
+
 // A function for connecting to MongoDB,
 // taking a single parameter of the connection string
 module.exports.connectToDatabase = async function connectToDatabase() {
