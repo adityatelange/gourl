@@ -31,8 +31,7 @@ module.exports = async (req, res) => {
       .then((urlObj) => {
         // return stats
         res.status(200).json({
-          clicks: urlObj.clicks,
-          createdOn: urlObj.createdOn,
+          clicks: urlObj.clicks
         });
       })
       .catch(() => {
