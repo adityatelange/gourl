@@ -11,14 +11,10 @@ URL Shortner using Vercel /Zeit-Now 's Serverless Api and MongoDB
 - Click the above button to Deploy
 
 - In the Environment variables put a new variable with
-
-  `NAME = GOURLDB`
-
-  and
-
-  `VALUE = <MongoDB Cluster URL>`
-
-  ex. `mongodb+srv://gourl:JUYEGBF8HDH@cluster0-gfgr.mongodb.net/gourl?retryWrites=true&w=majority`
+  
+  | NAME | VALUE (WILL BE ENCRYPTED) [example] |
+  | - | - |
+  | GOURLDB | mongodb+srv://\<username>:\<password>@cluster0.wwlhg.mongodb.net/\<dbname>?retryWrites=true&w=majority |
 
 - If Everything goes well you have your own URL Shortner :)
 
