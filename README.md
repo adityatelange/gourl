@@ -4,7 +4,7 @@ URL Shortner using Vercel /Zeit-Now 's Serverless Api and MongoDB
 
 ---
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/project?template=https://github.com/adityatelange/gourl/)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/git/external?repository-url=https%3A%2F%2Fgithub.com%2Fadityatelange%2Fgourl&env=GOURLDB&envDescription=GOURLDB%20is%20a%20required%20environment%20variable)
 
 ## How to Deploy
 
